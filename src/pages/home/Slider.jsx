@@ -66,12 +66,13 @@ const Slider = () => {
         <Typography className="mb-8 text-white text-sm md:text-base">
           {slide.description2}
         </Typography>
-        <Button
+        <a
+          href="#about"
           size="lg"
           className="bg-[#E8D31B] hover:bg-yellow-500 text-black font-bold text-sm px-6 py-3 rounded shadow-md"
         >
           Read more
-        </Button>
+        </a>
       </div>
     </div>
   </div>

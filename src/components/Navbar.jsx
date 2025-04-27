@@ -140,7 +140,7 @@ const Navbar = () => {
                     </button>
 
                     {isMobileServicesOpen && (
-                      <ul className="bg-[#0A9642] rounded-lg mt-2 text-center space-y-2 shadow-md border border-white/10 px-4 py-2">
+                      <ul className="bg-white text-[#0A9642] rounded-lg mt-2 text-center space-y-2 shadow-md border border-white/10 px-4 py-2">
                         {servicesDropdown.map((service, idx) => (
                           <li key={idx}>
                             <button
