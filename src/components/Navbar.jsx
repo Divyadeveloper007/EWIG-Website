@@ -1,85 +1,173 @@
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown, ChevronUp } from "lucide-react";
 import logo from "../assets/icon.png";
 import { useState } from "react";
+import DropdownMenu from "./DropdownMenu";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinks = [
     { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
     { label: "Why EWIG", href: "#why-ewig" },
-    { label: "Services", href: "#services" },
+    { label: "Services", href: "#services", dropdown: true },
     { label: "Projects", href: "#projects" },
     { label: "Contact", href: "#contact" },
   ];
 
+  const servicesDropdown = [
+    { label: "EPC", href: "#epc" },
+    { label: "Commercial Solutions", href: "#commercial-solutions" },
+    { label: "Solar Rooftop Project", href: "#rooftop-project" },
+    { label: "Government Approval", href: "#government-approval" },
+    { label: "O & M", href: "#operations-maintenance" },
+  ];
+
+  const handleServiceClick = (id) => {
+    setIsOpen(false);
+    setIsMobileServicesOpen(false);
+    setIsServicesOpen(false);
+    navigate(`/services#${id}`);
+  };
+
   return (
     <header className="w-full absolute top-0 left-0 z-50 py-4 bg-transparent">
-      <div className="flex items-center justify-between  max-w-6xl mx-auto bg-[#0A9642] rounded-full">
-
-        {/* Logo Left Aligned */}
-        <div className="bg-white px-4 py-2 rounded-full flex items-center justify-center">
-          <img
-            src={logo}
-            alt="EWIG Logo"
-            className="w-28 h-16 "
-          />
+      {/* Desktop View */}
+      <div className="hidden lg:flex flex-row w-full relative items-center pb-7 max-w-6xl mx-auto rounded-full">
+        {/* Logo */}
+        <div className="absolute z-50 top-10 transform -translate-y-1/2 bg-white overflow-hidden px-4 py-2 h-[90px] rounded-full">
+          <img src={logo} alt="EWIG Logo" className="w-36 h-auto" />
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center text-white font-medium ml-6 flex-1 justify-center">
-          <ul className="flex items-center list-none m-0 p-0">
-            {navLinks.map((item, idx) => (
-              <li key={idx} className="flex items-center">
-                <a
-                  href={item.href}
-                  className="px-4 py-3 rounded-full transition-all duration-500 ease-in-out hover:bg-white hover:text-[#0A9642]"
+        {/* Desktop Nav */}
+        <div className="w-full flex-1 pl-[150px] relative px-4 items-center rounded-full bg-[#0A9642] ml-[60px]">
+          <nav className="py-4 text-white font-medium">
+            <ul className="flex items-center list-none m-0 p-0">
+              {navLinks.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-center relative"
+                  onMouseEnter={() => item.dropdown && setIsServicesOpen(true)}
+                  onMouseLeave={() => item.dropdown && setIsServicesOpen(false)}
                 >
-                  {item.label}
-                </a>
-                {/* Vertical line with equal spacing */}
-                {idx < navLinks.length - 1 && (
-                  <span className="mx-2 w-px h-5 bg-[#383737]"></span>
-                )}
-              </li>
-            ))}
-            <li>
-              <a
-                href="#contact"
-                className="ml-6 bg-gray-900 px-5 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out hover:bg-white hover:text-[#0A9642] text-white"
-              >
-                Request a Quote
-              </a>
-            </li>
-          </ul>
-        </nav>
+                  {!item.dropdown ? (
+                    <a
+                      href={item.href}
+                      className="px-5 py-3 rounded-full transition-all duration-500 ease-in-out hover:bg-white hover:text-[#0A9642]"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <div className="px-4 py-3 rounded-full cursor-pointer hover:bg-white hover:text-[#0A9642] transition-all duration-500 ease-in-out">
+                      {item.label}
+                      {isServicesOpen && (
+                        <DropdownMenu
+                          items={servicesDropdown}
+                          onItemClick={(service) =>
+                            handleServiceClick(service.href.replace("#", ""))
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
 
-        {/* Mobile Menu Icon */}
-        <div className="lg:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="p-2 px-8">
-            <Menu className="text-white w-6 h-6" />
-          </button>
+                  {idx < navLinks.length - 1 && (
+                    <span className="mx-3 w-px h-5 bg-[#383737]"></span>
+                  )}
+                </li>
+              ))}
+
+              <li>
+                <a
+                  href="#contact"
+                  className="ml-6 bg-gray-900 px-5 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out hover:bg-white hover:text-[#0A9642] text-white"
+                >
+                  Request a Quote
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      {/* Mobile View */}
+      <div className="lg:hidden w-full px-4 mt-4">
+        <div className="flex items-center justify-between rounded-full px-4 py-2 shadow-md">
+          <div className="bg-white absolute rounded-full left-6 px-3 py-2 h-[70px] flex items-center">
+            <img src={logo} alt="EWIG Logo" className="w-28 h-auto" />
+          </div>
+
+          <div className="bg-[#0A9642] py-3 rounded-full  px-2 pr-6 w-full justify-end text-right">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden mt-2 mx-4 bg-[#0A9642] text-white animate-slide-in-left rounded-md px-6 py-4 space-y-4 text-base font-medium shadow-lg">
-          {[...navLinks, { label: "Request a Quote", href: "#contact", extraStyle: "bg-gray-900" }].map((item, i) => (
+        <div className="lg:hidden mt-2 mx-4 z-[999] animate-slide-in-left ml-auto w-full md:w-1/2">
+          <div className="bg-[#0A9642] text-white rounded-xl px-6 py-5 space-y-3 text-base font-medium shadow-2xl">
+            {navLinks.map((item, i) => (
+              <div key={i}>
+                {!item.dropdown ? (
+                  <a
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block text-center py-2 rounded-full transition-all duration-300 ease-in-out hover:bg-white hover:text-[#0A9642]"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <>
+                    <button
+                      onClick={() =>
+                        setIsMobileServicesOpen(!isMobileServicesOpen)
+                      }
+                      className="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-full transition-all duration-300 ease-in-out hover:bg-white hover:text-[#0A9642]"
+                    >
+                      {item.label}
+                      {isMobileServicesOpen ? (
+                        <ChevronUp size={16} />
+                      ) : (
+                        <ChevronDown size={16} />
+                      )}
+                    </button>
+
+                    {isMobileServicesOpen && (
+                      <ul className="bg-[#0A9642] rounded-lg mt-2 text-center space-y-2 shadow-md border border-white/10 px-4 py-2">
+                        {servicesDropdown.map((service, idx) => (
+                          <li key={idx}>
+                            <button
+                              onClick={() =>
+                                handleServiceClick(service.href.replace("#", ""))
+                              }
+                              className="block py-2 rounded-md w-full hover:bg-white hover:text-[#0A9642] transition duration-300"
+                            >
+                              {service.label}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                )}
+              </div>
+            ))}
+
             <a
-              key={i}
-              href={item.href}
+              href="#contact"
               onClick={() => setIsOpen(false)}
-              className={`block text-center py-2 rounded-full transition-all duration-300 ease-in-out ${
-                item.extraStyle
-                  ? `${item.extraStyle} text-white hover:bg-white hover:text-[#0A9642]`
-                  : "hover:bg-white hover:text-[#0A9642]"}`
-              }
+              className="block text-center mt-3 py-2 bg-gray-900 rounded-full text-white hover:bg-white hover:text-[#0A9642] transition-all duration-300"
             >
-              {item.label}
+              Request a Quote
             </a>
-          ))}
+          </div>
         </div>
       )}
     </header>

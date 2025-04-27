@@ -39,3 +39,33 @@
     scroll-behavior: smooth;
   }
   
+  @keyframes animate-dropdown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-dropdown {
+    animation: animate-dropdown 0.3s ease-in-out forwards;
+  }
+  
+  @keyframes dropdown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-dropdown {
+    animation: dropdown 0.3s ease forwards;
+  }
+  

@@ -48,13 +48,13 @@ const WhyEWIG = () => {
         </div>
 
         {/* Large Screens: Horizontal Layout */}
-        <div className="hidden sm:flex w-full justify-between items-stretch">
+        <div className="hidden sm:flex w-full justify-around items-stretch">
           {/* Engineer Image - LEFT */}
-          <div className="flex items-end w-[40%] sm:w-[300px] md:w-[420px] xl:w-[520px]">
+          <div className="flex items-end w-[40%] sm:w-[300px] md:w-[420px] xl:w-[620px]">
             <img
               src={engineerImg}
               alt="Engineer"
-              className="w-full h-auto object-contain"
+              className="w-full h-[500px] object-contain"
             />
           </div>
 

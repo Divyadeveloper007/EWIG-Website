@@ -1,6 +1,4 @@
 import React from 'react'
-import img1 from '../../assets/about1.png'
-import img2 from '../../assets/about2.png'
 import icon from '../../assets/solar-icon.png'
 import groupImg from '../../assets/about-group-img.png'
 
