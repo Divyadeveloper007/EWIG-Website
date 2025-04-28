@@ -1,20 +1,19 @@
-// DropdownMenu.jsx
-const DropdownMenu = ({ items , onItemClick }) => {
-    return (
-      <div className="absolute mt-2 top-10 bg-white text-[#107C3A] w-48 border-b-8 border-[#107C3A] rounded-lg shadow-lg z-20 animate-dropdown">
-        <ul>
-          {items.map((item, idx) => (
-            <li key={idx} className="hover:text-white hover:bg-[#0A9642]">
-              <a className="block px-4 py-2"
-               onClick={() => onItemClick(item)}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
-  
-  export default DropdownMenu;
-  
+// components/DropdownMenu.jsx
+const DropdownMenu = ({ items, onItemClick }) => {
+  return (
+    <ul className="absolute top-full mt-0 left-0 w-48 bg-white text-[#0A9642] rounded-lg shadow-lg py-2 z-50">
+      {items.map((item, idx) => (
+        <li key={idx}>
+          <button
+            onClick={() => onItemClick(item)}
+            className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
+            {item.label}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default DropdownMenu;
